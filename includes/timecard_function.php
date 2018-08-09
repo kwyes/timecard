@@ -269,9 +269,12 @@
     // if(!$today){
     //   $today = date('Y-m-d');
     // }
-    $today = "2018-08-07";
+    $today = date('Y-m-d');
     $tr = "";
-    $sql = "SELECT i.phone, i.dt, DATE_FORMAT(i.in_dt, '%H:%i:%s') as in_dt, DATE_FORMAT(i.out_dt, '%H:%i:%s') as out_dt, t.typeName FROM login_tm i LEFT JOIN login_tm_type t on t.typeID = i.typeID WHERE i.dt = '$today' ORDER BY i.in_dt desc";
+    $sql = "SELECT m.name, i.phone, i.dt, DATE_FORMAT(i.in_dt, '%H:%i:%s') as in_dt, DATE_FORMAT(i.out_dt, '%H:%i:%s') as out_dt, t.typeName FROM login_tm i ".
+           "LEFT JOIN login_tm_type t on t.typeID = i.typeID ".
+           "LEFT JOIN member as m on m.contact = i.phone ".
+           "WHERE i.dt = '2018-08-09' ORDER BY i.in_dt desc";
     $result = timecard_mysql_query($sql);
     while($row = timecard_mysql_fetch_assoc($result)){
       $phone = $row['phone'];
@@ -281,11 +284,21 @@
       // $in_dt = date("h:m:s", strtotime($in_dt));
       $out_dt = $row['out_dt'];
       // $out_dt = date("h:m:s", strtotime($out_dt));
+      $name = $row['name'];
       $typeName = $row['typeName'];
-      $duration = strtotime($out_dt) - strtotime($in_dt);
-      $tr .= "<tr>
+      $tr_class = '';
+      if($out_dt){
+        $duration = strtotime($out_dt) - strtotime($in_dt);
+        $duration = gmdate("H:i:s", $duration);
+        $tr_class = '';
+      } else {
+        $duration = '00:00:00';
+        $tr_class= 'danger';
+      }
+
+      $tr .= "<tr class='$tr_class'>
       <td>
-      $typeName
+      $name
       </td>
       <td>
       $phone
@@ -301,6 +314,9 @@
       </td>
       <td>
       $duration
+      </td>
+      <td>
+      $typeName
       </td>
       </tr>";
     }
