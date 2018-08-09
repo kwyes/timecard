@@ -1,0 +1,212 @@
+@import url(http://fonts.googleapis.com/css?family=Lato:300);
+@import url(http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css);
+html, body {
+  height: 100%;
+}
+body
+{
+    margin: 0;
+    padding: 0;
+    font-family: 'Lato' , sans-serif;
+    color: #333;
+    background-size: 100%;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-size-adjust: none;
+    background-color: #eab5b5 !important;
+    /* background: linear-gradient(132deg, #f44336, #E91E63, #9C27B0, #673AB7, #3F51B5, #2196F3,#03A9F4, #00BCD4, #009688, #4CAF50, #FFC107, #FF9800, #f44336, #E91E63, #9C27B0, #673AB7, #3F51B5, #2196F3,#03A9F4, #00BCD4, #009688, #4CAF50, #FFC107, #FF9800) !important;
+    background-size: 400% 400%;
+    animation: BackgroundGradient 30s ease infinite; */
+}
+/* @keyframes BackgroundGradient {
+    0% {background-position: 0% 50%;}
+    50% {background-position: 100% 50%;}
+    100% {background-position: 0% 50%;}
+} */
+p
+{
+    margin: 0;
+    padding: 0 0 10px 0;
+    line-height: 20px;
+}
+.span4
+{
+    width: 80px;
+    float: left;
+    margin: 0 8px 10px 8px;
+}
+
+.phone
+{
+    margin-top: 15px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+.tel
+{
+    margin-bottom: 10px;
+    margin-top: 10px;
+    border: 1px solid #9e9e9e;
+    border-radius: 0px;
+    height:46px !important;
+    font-size:24px !important;
+}
+.num-pad
+{
+    padding-left: 15px;
+}
+
+
+.num
+{
+    border: 1px solid #9e9e9e;
+    /* -webkit-border-radius: 999px;
+    border-radius: 999px;
+    -moz-border-radius: 999px; */
+    height: 80px;
+    background-color: #fff;
+    color: #333;
+    cursor: pointer;
+}
+.num:hover
+{
+    background-color: #9e9e9e;
+    color: #fff;
+    transition-property: background-color .2s linear 0s;
+    -moz-transition: background-color .2s linear 0s;
+    -webkit-transition: background-color .2s linear 0s;
+    -o-transition: background-color .2s linear 0s;
+}
+.txt
+{
+    font-size: 30px;
+    text-align: center;
+    margin-top: 22px;
+    font-family: 'Lato' , sans-serif;
+    line-height: 30px;
+    color: #333;
+}
+.small
+{
+    font-size: 15px;
+}
+
+.btn
+{
+    font-weight: bold;
+    -webkit-transition: .1s ease-in background-color;
+    -webkit-font-smoothing: antialiased;
+    letter-spacing: 1px;
+}
+.btn:hover
+{
+    transition-property: background-color .2s linear 0s;
+    -moz-transition: background-color .2s linear 0s;
+    -webkit-transition: background-color .2s linear 0s;
+    -o-transition: background-color .2s linear 0s;
+}
+.spanicons
+{
+    width: 72px;
+    float: left;
+    text-align: center;
+    margin-top: 40px;
+    color: #9e9e9e;
+    font-size: 16px;
+    cursor: pointer;
+}
+.spanicons:hover
+{
+    color: #3498db;
+    transition-property: color .2s linear 0s;
+    -moz-transition: color .2s linear 0s;
+    -webkit-transition: color .2s linear 0s;
+    -o-transition: color .2s linear 0s;
+}
+.active
+{
+    color: #3498db;
+}
+.timecard_list{
+  padding:20px;
+  font-size:large;
+}
+
+.well {
+    min-height: 20px;
+    padding: 0px;
+    margin-bottom: 20px;
+    background-color: #D9D9D9;
+    border: 1px solid #D9D9D9;
+    border-radius: 0px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
+    padding-left: 15px;
+    border:0px;
+}
+.thumbnail .caption {
+    padding: 9px;
+    color: #333;
+    padding-left: 0px;
+    padding-right: 0px;
+}
+.icon-style
+{
+    margin-right:15px;
+    font-size:18px;
+    margin-top:20px;
+}
+p
+{
+    margin:3px;
+}
+.well-add-card
+{
+    margin-bottom:10px;
+}
+.btn-add-card
+{
+    margin-top:20px;
+}
+.thumbnail {
+    display: block;
+    padding: 4px;
+    margin-bottom: 20px;
+    line-height: 1.42857143;
+    background-color: #fff;
+    border: 6px solid #D9D9D9;
+    border-radius: 15px;
+    -webkit-transition: border .2s ease-in-out;
+    -o-transition: border .2s ease-in-out;
+    transition: border .2s ease-in-out;
+    padding-left: 0px;
+    padding-right: 0px;
+}
+.vertical-center {
+  height:100%;
+  width:100%;
+
+  text-align: center;  /* align the inline(-block) elements horizontally */
+  font: 0/0 a;         /* remove the gap between inline(-block) elements */
+}
+
+.vertical-center:before {    /* create a full-height inline block pseudo=element */
+  content: ' ';
+  display: inline-block;
+  vertical-align: middle;  /* vertical alignment of the inline element */
+  height: 100%;
+}
+
+.vertical-center > .container {
+  /* max-width: 100%; */
+  display: inline-block;
+  vertical-align: middle;  /* vertical alignment of the inline element */
+}
+.cover-bottom{
+  display: flex;
+  justify-content: center;
+  flex-wrap: nowrap;
+}
+.timecard_list .thumbnail{
+  text-align: left;
+}

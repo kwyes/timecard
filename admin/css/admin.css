@@ -1,0 +1,135 @@
+body {
+  background-color: #eab5b5 !important;
+}
+
+.panel-body .btn:not(.btn-block) {
+  width: 120px;
+  margin-bottom: 10px;
+}
+
+html, body {
+  height: 100%;
+}
+
+.vertical-center {
+  height: 100%;
+  width: 100%;
+  text-align: center;
+  /* align the inline(-block) elements horizontally */
+  /* font: 0/0 a; */
+  /* remove the gap between inline(-block) elements */
+}
+
+.vertical-center:before {
+  /* create a full-height inline block pseudo=element */
+  content: ' ';
+  display: inline-block;
+  vertical-align: middle;
+  /* vertical alignment of the inline element */
+  height: 100%;
+}
+
+.vertical-center>.container {
+  /* max-width: 100%; */
+  display: inline-block;
+  vertical-align: middle;
+  /* vertical alignment of the inline element */
+}
+
+.dual-list .list-group {
+  margin-top: 8px;
+}
+
+.list-left li, .list-right li {
+  cursor: pointer;
+}
+
+.list-arrows {
+  padding-top: 100px;
+}
+
+.list-arrows button {
+  margin-bottom: 20px;
+}
+#tType_select,#uType_select li {
+  color:black;
+  font-size: 14px;
+  text-align: left;
+  margin-left:5px;
+}
+#tType_select li span {
+  float:right;
+}
+#uType_select li span {
+  float:right;
+}
+.filterable {
+    /* margin-top: 15px; */
+}
+.filterable .panel-heading .pull-right {
+    margin-top: -20px;
+}
+.filterable .filters input[disabled] {
+    background-color: transparent;
+    border: none;
+    cursor: auto;
+    box-shadow: none;
+    padding: 0;
+    height: auto;
+}
+.filterable .filters input[disabled]::-webkit-input-placeholder {
+    color: #333;
+}
+.filterable .filters input[disabled]::-moz-placeholder {
+    color: #333;
+}
+.filterable .filters input[disabled]:-ms-input-placeholder {
+    color: #333;
+}
+.user-register-table tr td {
+  font-size:15px;
+  color:black;
+  text-align: left;
+}
+.btn-member-update {
+  display:none;
+}
+.btn-member-delete {
+  display:none;
+}
+.list-group {
+  height: 115px;
+  overflow-y: scroll;
+}
+
+.header-fixed {
+    width: 100%
+}
+
+.header-fixed > thead,
+.header-fixed > tbody,
+.header-fixed > thead > tr,
+.header-fixed > tbody > tr,
+.header-fixed > thead > tr > th,
+.header-fixed > tbody > tr > td {
+    display: block;
+}
+
+.header-fixed > tbody > tr:after,
+.header-fixed > thead > tr:after {
+    content: ' ';
+    display: block;
+    visibility: hidden;
+    clear: both;
+}
+
+.header-fixed > tbody {
+    overflow-y: auto;
+    height: 196px;
+}
+
+.header-fixed > tbody > tr > td,
+.header-fixed > thead > tr > th {
+    width: 50%;
+    float: left;
+}
