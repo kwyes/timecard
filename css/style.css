@@ -210,3 +210,6 @@ p
 .timecard_list .thumbnail{
   text-align: left;
 }
+.phone-chk {
+  height: 60px;
+}

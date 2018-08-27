@@ -1,7 +1,6 @@
-<?
-    $_SESSION['timecardID'] = 'test';
+<?php
+    ini_set( "short_open_tag", "0" );
 
-    echo $_SESSION['timecardID'];
-
+    phpinfo();
 
 ?>

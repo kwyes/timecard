@@ -22,7 +22,7 @@
                               <a data-toggle="tab" href="#menu8" href="#" class="btn btn-primary btn-lg" role="button"><span class="glyphicon glyphicon-tag"></span> <br/>None</a>
                             </div>
                         </div>
-                        <a href="/timecard" class="btn btn-success btn-lg btn-block" role="button"><span class="glyphicon glyphicon-globe"></span> Website</a>
+                        <a href="/" class="btn btn-success btn-lg btn-block" role="button"><span class="glyphicon glyphicon-globe"></span> Website</a>
                     </div>
                 </div>
             </div>

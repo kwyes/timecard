@@ -10,7 +10,7 @@
                   </div>
                   <div class="col-md-2">
                       <div class="btn-group">
-                          <a class="btn btn-default selector" title="select all" data-toggle="modal" data-target="#uTypeModal"><i class="glyphicon glyphicon-unchecked"></i></a>
+                          <a class="btn btn-default selector" title="select all" data-toggle="modal" data-target="#uTypeModal"><i class="glyphicon glyphicon-plus"></i></a>
                       </div>
                   </div>
               </div>

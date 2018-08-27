@@ -122,13 +122,19 @@ function login_process() {
           data:{
             telNumber : telNumber_val
           },
+          dataType: 'json',
           success:function(data){
-            if(data == 'noname'){
+            var status = data["status"];
+            if(status == 'noname'){
               $('.timecard_list').html('Wrong Number');
             } else {
+              var name = data["name"];
+              var mId = data["mId"];
+              alert(status+name[1]);
               $('.timecard_list').html('');
               $('.phone-chk').html('SUBMIT');
-              $('#telName').val(data);
+              $('#telName').val(name);
+              $('#mId').val(mId);
             }
           }
   });
@@ -136,11 +142,13 @@ function login_process() {
 
 function insert_timecard_detail() {
   var telNumber_val = $('#telNumber').val();
+  var mId_val = $('#mId').val();
   $.ajax({
           url:'includes/timecard_function.php?function=insert_timecard_detail',
           type:'POST',
           data:{
-            telNumber : telNumber_val
+            telNumber : telNumber_val,
+            mId : mId_val
           },
           dataType: 'json',
           success:function(data){
@@ -562,10 +570,12 @@ function admin_login_process(){
 }
 
 function fetch_reports(){
-  var today = $('.today_date').val();
+  var today = $('#today_date').val();
   // alert(today);
   // var password = $('#m_password').val();
   // alert(username+password);
+  $('#reports_table tbody').html('');
+
   $.ajax({
           url:'../includes/timecard_function.php?function=fetch_reports',
           type:'POST',
@@ -573,6 +583,7 @@ function fetch_reports(){
             today : today
           },
           success:function(data){
+            // alert(data);
             $('#reports_table tbody').html(data);
           },
           error: function(xhr, status, error) {

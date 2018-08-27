@@ -7,13 +7,29 @@
   function login_process($telNumber){
     $sql = "SELECT * FROM member WHERE contact = '$telNumber'";
     $result = timecard_mysql_query($sql);
-    if (timecard_mysql_num_rows($result) > 0) {
+    if (timecard_mysql_num_rows($result) == 1) {
+      $data['status'] = "success";
         while($row = timecard_mysql_fetch_assoc($result)) {
-            echo $row['name'];
+          $data['name'] = $row['name'];
+          $data['mId'] = $row['mId'];
         }
+    } elseif (timecard_mysql_num_rows($result) > 1) {
+      $data['status'] = "more";
+      $namearr = array();
+      $midarr = array();
+        while($row = timecard_mysql_fetch_assoc($result)) {
+          array_push($namearr, $row['name']);
+          array_push($midarr, $row['mId']);
+        }
+      $data['name'] = $namearr;
+      $data['mId'] = $midarr;
     } else {
-        echo "noname";
+      $data['status'] = "noname";
+      $data['name'] = "";
+      $data['mId'] = "";
     }
+    $data = json_encode($data);
+    print_r($data);
   }
 
   function admin_login_process($username, $password) {
@@ -33,7 +49,7 @@
 
   }
 
-  function insert_timecard_detail($telNumber){
+  function insert_timecard_detail($telNumber,$mId){
     $today = date('Y-m-d');
     $today_time = date("Y-m-d H:i:s");
     $sql = "SELECT seq FROM login_tm WHERE phone = '$telNumber' and dt = '$today'";
@@ -46,7 +62,7 @@
     $typeID = $type_row['timecardType'];
 
     if (timecard_mysql_num_rows($result) == 0) {
-      $insert_sql = "INSERT INTO login_tm (seq, typeID, phone, dt, in_dt, out_dt) VALUES (NULL, '$typeID', '$telNumber', '$today', '$today_time', NULL)";
+      $insert_sql = "INSERT INTO login_tm (seq, typeID, mId, phone, dt, in_dt, out_dt) VALUES (NULL, '$typeID', '$mId', '$telNumber', '$today', '$today_time', NULL)";
       $insert_result = timecard_mysql_query($insert_sql);
       $data['status'] = "success";
       $data['date'] = $today;
@@ -55,7 +71,7 @@
       $data['chk'] = "0";
       $data['timecard_date'] = $today_time;
     } else {
-      $update_sql = "UPDATE login_tm SET out_dt = '$today_time' WHERE phone = '$telNumber' AND dt = '$today'";
+      $update_sql = "UPDATE login_tm SET out_dt = '$today_time' WHERE phone = '$telNumber' AND mId = '$mId' AND dt = '$today'";
       $update_result = timecard_mysql_query($update_sql);
       $data['status'] = "success";
       $data['date'] = $today;
@@ -266,62 +282,60 @@
   }
 
   function fetch_reports($today) {
-    // if(!$today){
-    //   $today = date('Y-m-d');
-    // }
-    $today = date('Y-m-d');
-    $tr = "";
-    $sql = "SELECT m.name, i.phone, i.dt, DATE_FORMAT(i.in_dt, '%H:%i:%s') as in_dt, DATE_FORMAT(i.out_dt, '%H:%i:%s') as out_dt, t.typeName FROM login_tm i ".
-           "LEFT JOIN login_tm_type t on t.typeID = i.typeID ".
-           "LEFT JOIN member as m on m.contact = i.phone ".
-           "WHERE i.dt = '2018-08-09' ORDER BY i.in_dt desc";
-    $result = timecard_mysql_query($sql);
-    while($row = timecard_mysql_fetch_assoc($result)){
-      $phone = $row['phone'];
-      $dt = $row['dt'];
-      $dt = date("Y-m-d", strtotime($dt));
-      $in_dt = $row['in_dt'];
-      // $in_dt = date("h:m:s", strtotime($in_dt));
-      $out_dt = $row['out_dt'];
-      // $out_dt = date("h:m:s", strtotime($out_dt));
-      $name = $row['name'];
-      $typeName = $row['typeName'];
-      $tr_class = '';
-      if($out_dt){
-        $duration = strtotime($out_dt) - strtotime($in_dt);
-        $duration = gmdate("H:i:s", $duration);
-        $tr_class = '';
-      } else {
-        $duration = '00:00:00';
-        $tr_class= 'danger';
-      }
-
-      $tr .= "<tr class='$tr_class'>
-      <td>
-      $name
-      </td>
-      <td>
-      $phone
-      </td>
-      <td>
-      $dt
-      </td>
-      <td>
-      $in_dt
-      </td>
-      <td>
-      $out_dt
-      </td>
-      <td>
-      $duration
-      </td>
-      <td>
-      $typeName
-      </td>
-      </tr>";
-    }
-    echo $tr;
-  }
+   // if(!$today){
+   //   $today = date('Y-m-d');
+   // }
+   $tr = "";
+   $sql = "SELECT m.name, i.phone, i.dt, DATE_FORMAT(i.in_dt, '%H:%i:%s') as in_dt, DATE_FORMAT(i.out_dt, '%H:%i:%s') as out_dt, t.typeName FROM login_tm i ".
+          "LEFT JOIN login_tm_type t on t.typeID = i.typeID ".
+          "LEFT JOIN member as m on m.contact = i.phone AND m.mId = i.mId ".
+          "WHERE i.dt = '$today' ORDER BY i.in_dt desc";
+   $result = timecard_mysql_query($sql);
+   while($row = timecard_mysql_fetch_assoc($result)){
+     $phone = $row['phone'];
+     $dt = $row['dt'];
+     $dt = date("Y-m-d", strtotime($dt));
+     $in_dt = $row['in_dt'];
+     // $in_dt = date("h:m:s", strtotime($in_dt));
+     $out_dt = $row['out_dt'];
+     // $out_dt = date("h:m:s", strtotime($out_dt));
+     $name = $row['name'];
+     $typeName = $row['typeName'];
+     $tr_class = '';
+     if($out_dt){
+       $duration = strtotime($out_dt) - strtotime($in_dt);
+       $duration = gmdate("H:i:s", $duration);
+       $tr_class = '';
+     } else {
+       $duration = '00:00:00';
+       $tr_class= 'danger';
+     }
+     $tr .= "<tr class='$tr_class'>
+     <td>
+     $name
+     </td>
+     <td>
+     $phone
+     </td>
+     <td>
+     $dt
+     </td>
+     <td>
+     $in_dt
+     </td>
+     <td>
+     $out_dt
+     </td>
+     <td>
+     $duration
+     </td>
+     <td>
+     $typeName
+     </td>
+     </tr>";
+   }
+   echo $tr;
+ }
 
   function delete_user($member_mId) {
     $sql = "DELETE FROM member WHERE mId = '$member_mId'";
@@ -345,7 +359,8 @@
 
     case 'insert_timecard_detail':
       $telNumber = $_POST['telNumber'];
-      insert_timecard_detail($telNumber);
+      $mId = $_POST['mId'];
+      insert_timecard_detail($telNumber,$mId);
     break;
 
     case 'fetch_company_info':
@@ -435,7 +450,7 @@
     break;
 
     case 'fetch_reports':
-      $today = date('Y-m-d');
+      $today = $_POST['today'];
       fetch_reports($today);
     break;
 

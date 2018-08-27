@@ -2,16 +2,16 @@
 <!-- <div class="panel panel-primary"> -->
   <div class="panel-heading">
     <h3 class="panel-title">Reports</h3>
-    <!-- <div class="pull-right">
+    <div class="pull-right">
       <span class="clickable filter" data-toggle="tooltip" title="Toggle table filter" data-container="body">
         <i class="glyphicon glyphicon-search"></i>
       </span>
-    </div> -->
+    </div>
   </div>
   <div class="panel-body">
-    <div class="input-group" style="width:100%;">
-      <input type="text" style="width:70%;" class="form-control" id="dev-table-filter" data-action="filter" data-filters="#reports_table" placeholder="Filter" />
-      <input type="date" style="width:30%;" class="form-control" class="today_date" name="" value="<?=date('Y-m-d')?>">
+    <div class="form-group">
+      <input type="text" class="form-control" id="dev-table-filter" data-action="filter" data-filters="#reports_table" placeholder="Filter" />
+      <input type="text" class="form-control" id="today_date" name="" value="<?php echo date('Y-m-d'); ?>">
     </div>
   </div>
   <table class="table table-hover" id="reports_table">
@@ -23,7 +23,6 @@
         <th>In-Time</th>
         <th>Out-Time</th>
         <th>Duration</th>
-        <th>Type</th>
       </tr>
     </thead>
     <tbody class="">
@@ -35,6 +34,16 @@
       fetch_reports();
       // alert($('.today_date').val());
     });
+
+    $(function() {
+        $( "#today_date" ).datepicker({
+          dateFormat: "yy-mm-dd",
+          onSelect: function (date) {
+            fetch_reports();
+          }
+        });
+    });
+
 
     (function(){
         'use strict';
