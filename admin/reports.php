@@ -18,11 +18,11 @@
     <thead class="">
       <tr class="">
         <th>Name</th>
-        <th>Phone #</th>
-        <th>Date</th>
-        <th>In-Time</th>
-        <th>Out-Time</th>
-        <th>Duration</th>
+        <th width="15%">Phone #</th>
+        <th width="19%">Date</th>
+        <th width="15%">In-Time</th>
+        <th width="15%">Out-Time</th>
+        <th width="15%">Duration</th>
       </tr>
     </thead>
     <tbody class="">

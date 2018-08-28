@@ -97,6 +97,7 @@ $(document).ready(function () {
     });
 
 
+
 });
 
 
@@ -127,10 +128,12 @@ function login_process() {
             var status = data["status"];
             if(status == 'noname'){
               $('.timecard_list').html('Wrong Number');
+            } else if (status == 'more') {
+              alert('more');
             } else {
               var name = data["name"];
               var mId = data["mId"];
-              alert(status+name[1]);
+              // alert(status+name[1]);
               $('.timecard_list').html('');
               $('.phone-chk').html('SUBMIT');
               $('#telName').val(name);
@@ -163,9 +166,11 @@ function insert_timecard_detail() {
               if(chk == '0') {
                 var icon = '<i class="fas fa-sign-in-alt pull-right"></i>';
                 var icon_text = 'SIGN IN';
+                var icon_text2 = 'SignIn';
               } else {
                 var icon = '<i class="fas fa-sign-out-alt pull-right"></i>';
                 var icon_text = 'SIGN OUT';
+                var icon_text2 = 'SignOut';
               }
               var html =
               '<div class="thumbnail">'+
@@ -185,7 +190,8 @@ function insert_timecard_detail() {
                   '<span class="glyphicon glyphicon-exclamation-sign text-danger pull-right icon-style"></span>'+
                 '</div>'+
               '</div>';
-
+              toggle_loader(icon_text2);
+              // $('.loader-wrapper .loader-text').html('');
             }
             $('.timecard_list').html(html);
             clearTextTag();
@@ -213,6 +219,11 @@ function insert_timecard_detail2(){
   });
 }
 
+function toggle_loader(icon_text2) {
+  $('.loader-wrapper').css("display","block");
+  $('.loader-wrapper .loader-text').html(icon_text2);
+  $('.loader-wrapper').delay(1500).fadeOut('slow');
+}
 function update_company_info(){
   var company_name = $('#company_name').val();
   var company_phone = $('#company_phone').val();
