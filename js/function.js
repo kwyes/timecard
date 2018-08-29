@@ -117,6 +117,10 @@ function check(){
 
 function login_process() {
   var telNumber_val = $('#telNumber').val();
+  if(telNumber_val == '') {
+    alert('No Number');
+    return;
+  }
   $.ajax({
           url:'includes/timecard_function.php?function=login_process',
           type:'POST',
@@ -129,7 +133,7 @@ function login_process() {
             if(status == 'noname'){
               $('.timecard_list').html('Wrong Number');
             } else if (status == 'more') {
-              alert('more');
+              $('#usertable').modal('toggle');
             } else {
               var name = data["name"];
               var mId = data["mId"];
