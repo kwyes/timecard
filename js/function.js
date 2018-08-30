@@ -134,6 +134,15 @@ function login_process() {
               $('.timecard_list').html('Wrong Number');
             } else if (status == 'more') {
               $('#usertable').modal('toggle');
+              var name = data['name'];
+              var mId = data['mId'];
+              var html_text;
+              alert(name.length);
+              for (var i = 0; i < name.length; i++) {
+                html_text += "<tr><td>"+name[i]+"</td></tr>";
+              }
+              var html = "<table class='table'>"+html_text+"</table>";
+              $('#usertable .modal-body').html(html);
             } else {
               var name = data["name"];
               var mId = data["mId"];
