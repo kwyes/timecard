@@ -96,10 +96,15 @@ $(document).ready(function () {
       admin_login_process();
     });
 
+    $('#usertable #userModalClose').click(function () {
+      clearTextTag();
+    });
 
+    $('.btn-userchoose').click(function () {
+      console.log('test');
+    });
 
 });
-
 
 function removeTextTag()  {
   var telNumber_val = $('#telNumber').val();
@@ -136,10 +141,9 @@ function login_process() {
               $('#usertable').modal('toggle');
               var name = data['name'];
               var mId = data['mId'];
-              var html_text;
-              alert(name.length);
+              var html_text = '';
               for (var i = 0; i < name.length; i++) {
-                html_text += "<tr><td>"+name[i]+"</td></tr>";
+                html_text += "<tr><td class='tdname'>"+name[i]+"<input type='hidden' class='tdmId' value='"+mId[i]+"'></td><td align='right'><button class='btn btn-default btn-userchoose' onclick='setMidName(this)'><span class='glyphicon glyphicon-ok'></span></button></td></tr>";
               }
               var html = "<table class='table'>"+html_text+"</table>";
               $('#usertable .modal-body').html(html);
@@ -154,6 +158,16 @@ function login_process() {
             }
           }
   });
+}
+
+function setMidName(e) {
+  var name = $(e).closest("tr").find(".tdname").text();
+  var mId = $(e).closest("tr").find(".tdmId").val();
+  $('.timecard_list').html('');
+  $('.phone-chk').html('SUBMIT');
+  $('#telName').val(name);
+  $('#mId').val(mId);
+  $('#usertable').modal('toggle');
 }
 
 function insert_timecard_detail() {
@@ -609,6 +623,34 @@ function fetch_reports(){
           success:function(data){
             // alert(data);
             $('#reports_table tbody').html(data);
+          },
+          error: function(xhr, status, error) {
+            var err = eval("(" + xhr.responseText + ")");
+            alert(err.Message);
+          }
+  });
+}
+
+function reports_get_number(){
+  var today = $('#today_date').val();
+  // alert(today);
+  // var password = $('#m_password').val();
+  // alert(username+password);
+  // $('#reports_table tbody').html('');
+
+  $.ajax({
+          url:'../includes/timecard_function.php?function=reports_get_number',
+          type:'POST',
+          data:{
+            today : today
+          },
+          success:function(data){
+            var total = data['total'];
+            var rest = data['rest'];
+            var incount = data['incount'];
+
+            alert(total+rest+incount);
+
           },
           error: function(xhr, status, error) {
             var err = eval("(" + xhr.responseText + ")");

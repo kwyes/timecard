@@ -22,8 +22,8 @@
       return $this_result;
   }
 
-  function get_name_from_number($telNumber) {
-    $sql = "SELECT name FROM member WHERE contact = '$telNumber'";
+  function get_name_from_number($telNumber, $mId) {
+    $sql = "SELECT name FROM member WHERE contact = '$telNumber'and mId = '$mId'";
     $result = timecard_mysql_query($sql);
     $this_result = timecard_mysql_fetch_assoc($result);
     return $this_result['name'];

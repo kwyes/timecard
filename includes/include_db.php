@@ -1,7 +1,7 @@
 <?php
   define("TIMECARD_DB_SERVER", "localhost");
   define("TIMECARD_DB_USERID", "dbname");
-  define("TIMECARD_PASSWORD", "1234");
+  define("TIMECARD_PASSWORD", "12345");
   define("TIMECARD_DB_NAME", "id6735578_timecard");
 
   // Generate connection variable

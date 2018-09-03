@@ -32,6 +32,7 @@
   <script>
     $(document).ready(function(){
       fetch_reports();
+      reports_get_number();
       // alert($('.today_date').val());
     });
 
@@ -40,6 +41,7 @@
           dateFormat: "yy-mm-dd",
           onSelect: function (date) {
             fetch_reports();
+            reports_get_number();
           }
         });
     });

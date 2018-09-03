@@ -52,9 +52,9 @@
   function insert_timecard_detail($telNumber,$mId){
     $today = date('Y-m-d');
     $today_time = date("Y-m-d H:i:s");
-    $sql = "SELECT seq FROM login_tm WHERE phone = '$telNumber' and dt = '$today'";
+    $sql = "SELECT seq FROM login_tm WHERE phone = '$telNumber' and dt = '$today' and mId = '$mId'";
     $result = timecard_mysql_query($sql);
-    $getName = get_name_from_number($telNumber);
+    $getName = get_name_from_number($telNumber, $mId);
 
     $typesql = "SELECT timecardType FROM company_info";
     $type_result = timecard_mysql_query($typesql);
@@ -337,6 +337,19 @@
    echo $tr;
  }
 
+ function reports_get_number($today){
+   $sql = "SELECT count(*) total, sum(case when out_dt is NULL then 1 else 0 end) rest FROM login_tm WHERE dt = '$today'";
+   $result = timecard_mysql_query($sql);
+   $row = timecard_mysql_fetch_assoc($result);
+
+   $data['total'] = $row['total'];
+   $data['rest'] = $row['rest'];
+   $data['incount'] = $row['total'] - $row['rest'];
+
+   $data = json_encode($data);
+   print_r($data);
+ }
+
   function delete_user($member_mId) {
     $sql = "DELETE FROM member WHERE mId = '$member_mId'";
     $result = timecard_mysql_query($sql);
@@ -453,6 +466,12 @@
       $today = $_POST['today'];
       fetch_reports($today);
     break;
+
+    case 'reports_get_number':
+      $today = $_POST['today'];
+      fetch_reports($today);
+    break;
+
 
     case 'delete_user':
       $member_mId = $_POST['member_mId'];
