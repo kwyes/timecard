@@ -345,7 +345,7 @@
    $data['total'] = $row['total'];
    $data['rest'] = $row['rest'];
    $data['incount'] = $row['total'] - $row['rest'];
-
+   $data['query'] = $sql;
    $data = json_encode($data);
    print_r($data);
  }
@@ -469,7 +469,7 @@
 
     case 'reports_get_number':
       $today = $_POST['today'];
-      fetch_reports($today);
+      reports_get_number($today);
     break;
 
 

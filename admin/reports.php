@@ -9,10 +9,31 @@
     </div>
   </div>
   <div class="panel-body">
-    <div class="form-group">
+    <div class="form-group report-group">
       <input type="text" class="form-control" id="dev-table-filter" data-action="filter" data-filters="#reports_table" placeholder="Filter" />
       <input type="text" class="form-control" id="today_date" name="" value="<?php echo date('Y-m-d'); ?>">
     </div>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="input-group">
+          <span class="input-group-addon">TOTAL</span>
+          <input type="text" class="form-control report-total" placeholder="" aria-describedby="basic-addon1" readonly>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="input-group">
+          <span class="input-group-addon">OUT</span>
+          <input type="text" class="form-control report-in" placeholder="" aria-describedby="basic-addon1" readonly>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="input-group">
+          <span class="input-group-addon">LEFT</span>
+          <input type="text" class="form-control report-rest" placeholder="" aria-describedby="basic-addon1" readonly>
+        </div>
+      </div>
+    </div>
+
   </div>
   <table class="table table-hover" id="reports_table">
     <thead class="">

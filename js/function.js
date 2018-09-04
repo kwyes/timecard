@@ -633,24 +633,22 @@ function fetch_reports(){
 
 function reports_get_number(){
   var today = $('#today_date').val();
-  // alert(today);
-  // var password = $('#m_password').val();
-  // alert(username+password);
-  // $('#reports_table tbody').html('');
-
   $.ajax({
           url:'../includes/timecard_function.php?function=reports_get_number',
           type:'POST',
           data:{
             today : today
           },
+          dataType: 'json',
           success:function(data){
             var total = data['total'];
             var rest = data['rest'];
             var incount = data['incount'];
-
-            alert(total+rest+incount);
-
+            var query = data['query'];
+            $('.report-total').val(total);
+            $('.report-in').val(incount);
+            $('.report-rest').val(rest);
+            // alert(total+rest+incount);
           },
           error: function(xhr, status, error) {
             var err = eval("(" + xhr.responseText + ")");

@@ -47,8 +47,7 @@
 
                 </div>
                 <div id="menu7" class="tab-pane fade">
-                  <h3>Menu 3</h3>
-                  <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+                  <?php include_once("upload_image.php"); ?>
                 </div>
                 <div id="menu8" class="tab-pane fade">
                   <h3>Menu 3</h3>
