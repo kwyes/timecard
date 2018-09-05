@@ -1,10 +1,9 @@
-<script src="js/fileupload.js"></script>
 <div class="panel panel-default">
   <div class="panel-heading">
     <h3 class="panel-title">Upload Background Image <small>Creative!</small></h3>
   </div>
   <div class="panel-body">
-    <form id="file-upload-form" class="uploader">
+    <form id="file-upload-form" class="uploader" action="upload_img_process.php" method="POST" enctype="multipart/form-data">
       <input id="file-upload" type="file" name="fileUpload" accept="image/*" />
 
       <label for="file-upload" id="file-drag">
@@ -22,7 +21,8 @@
           </progress>
         </div>
       </label>
-      <button type="submit" name="button">TEST</button>
+      <button type="submit" name="button" class="btn btn-default">SAVE</button>
     </form>
   </div>
 </div>
+<script src="js/fileupload.js"></script>
