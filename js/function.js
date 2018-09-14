@@ -104,6 +104,14 @@ $(document).ready(function () {
       console.log('test');
     });
 
+    $("#userModalSubmit").click(function(event){
+      event.preventDefault();
+      var searchIDs = $("#usertable input:checkbox:checked").map(function(){
+        return $(this).val();
+      }).get(); // <----
+      setMidName(searchIDs);
+    });
+
 });
 
 function removeTextTag()  {
@@ -143,7 +151,7 @@ function login_process() {
               var mId = data['mId'];
               var html_text = '';
               for (var i = 0; i < name.length; i++) {
-                html_text += "<tr><td class='tdname'>"+name[i]+"<input type='hidden' class='tdmId' value='"+mId[i]+"'></td><td align='right'><button class='btn btn-default btn-userchoose' onclick='setMidName(this)'><span class='glyphicon glyphicon-ok'></span></button></td></tr>";
+                html_text += "<tr><td class='tdname'>"+name[i]+"<input type='hidden' class='tdmId' value='"+mId[i]+"'></td><td align='right'><label class='btn btn-default'><input type='checkbox' name='userchk[]' class='glyphicon glyphicon-unchecked' autocomplete='off' value='"+mId[i]+"'></label></td></tr>";
               }
               var html = "<table class='table'>"+html_text+"</table>";
               $('#usertable .modal-body').html(html);
@@ -160,73 +168,80 @@ function login_process() {
   });
 }
 
-function setMidName(e) {
-  var name = $(e).closest("tr").find(".tdname").text();
-  var mId = $(e).closest("tr").find(".tdmId").val();
+function setMidName(searchIDs) {
+  var name = $('#usertable input:checkbox:checked').closest("tr").find(".tdname").text();
+  var mId = $('#usertable input:checkbox:checked').closest("tr").find(".tdmId").val();
   $('.timecard_list').html('');
   $('.phone-chk').html('SUBMIT');
   $('#telName').val(name);
-  $('#mId').val(mId);
+  $('#mId').val(searchIDs);
   $('#usertable').modal('toggle');
 }
 
 function insert_timecard_detail() {
   var telNumber_val = $('#telNumber').val();
   var mId_val = $('#mId').val();
-  $.ajax({
-          url:'includes/timecard_function.php?function=insert_timecard_detail',
-          type:'POST',
-          data:{
-            telNumber : telNumber_val,
-            mId : mId_val
-          },
-          dataType: 'json',
-          success:function(data){
-            var status = data["status"];
-            var date = data["date"];
-            var phone = data["phone"];
-            var name = data["name"];
-            var chk = data["chk"];
-            var timecard_date = data["timecard_date"];
 
-            if(status == 'success'){
-              if(chk == '0') {
-                var icon = '<i class="fas fa-sign-in-alt pull-right"></i>';
-                var icon_text = 'SIGN IN';
-                var icon_text2 = 'SignIn';
-              } else {
-                var icon = '<i class="fas fa-sign-out-alt pull-right"></i>';
-                var icon_text = 'SIGN OUT';
-                var icon_text2 = 'SignOut';
+  var mId_temp = $('#mId').val();
+  var temp = new Array();
+  temp = mId_temp.split(",");
+  for(var i = 0; i < temp.length; i++){
+    mId_val = temp[i];
+    $.ajax({
+            url:'includes/timecard_function.php?function=insert_timecard_detail',
+            type:'POST',
+            data:{
+              telNumber : telNumber_val,
+              mId : mId_val
+            },
+            dataType: 'json',
+            success:function(data){
+              var status = data["status"];
+              var date = data["date"];
+              var phone = data["phone"];
+              var name = data["name"];
+              var chk = data["chk"];
+              var timecard_date = data["timecard_date"];
+
+              if(status == 'success'){
+                if(chk == '0') {
+                  var icon = '<i class="fas fa-sign-in-alt pull-right"></i>';
+                  var icon_text = 'SIGN IN';
+                  var icon_text2 = 'SignIn';
+                } else {
+                  var icon = '<i class="fas fa-sign-out-alt pull-right"></i>';
+                  var icon_text = 'SIGN OUT';
+                  var icon_text2 = 'SignOut';
+                }
+                var html =
+                '<div class="thumbnail">'+
+                  '<div class="caption">'+
+                    '<div class="col-lg-12">'+
+                        '<span class="glyphicon glyphicon-calendar"></span>'+
+                        icon +
+                    '</div>'+
+                    '<div class="col-lg-12 well well-add-card">'+
+                        '<h3>'+ name +'</h3>'+
+                    '</div>'+
+                    '<div class="col-lg-12">'+
+                        '<p>'+phone+'</p>'+
+                        '<p class"text-muted">'+timecard_date+'</p>'+
+                    '</div>'+
+                    '<div>'+icon_text+'</div>'
+                    '<span class="glyphicon glyphicon-exclamation-sign text-danger pull-right icon-style"></span>'+
+                  '</div>'+
+                '</div>';
+                toggle_loader(icon_text2);
+                // $('.loader-wrapper .loader-text').html('');
               }
-              var html =
-              '<div class="thumbnail">'+
-                '<div class="caption">'+
-                  '<div class="col-lg-12">'+
-                      '<span class="glyphicon glyphicon-calendar"></span>'+
-                      icon +
-                  '</div>'+
-                  '<div class="col-lg-12 well well-add-card">'+
-                      '<h3>'+ name +'</h3>'+
-                  '</div>'+
-                  '<div class="col-lg-12">'+
-                      '<p>'+phone+'</p>'+
-                      '<p class"text-muted">'+timecard_date+'</p>'+
-                  '</div>'+
-                  '<div>'+icon_text+'</div>'
-                  '<span class="glyphicon glyphicon-exclamation-sign text-danger pull-right icon-style"></span>'+
-                '</div>'+
-              '</div>';
-              toggle_loader(icon_text2);
-              // $('.loader-wrapper .loader-text').html('');
+              $('.timecard_list').html(html);
+              clearTextTag();
+            },
+            error : function(){
+              alert('Contact IT');
             }
-            $('.timecard_list').html(html);
-            clearTextTag();
-          },
-          error : function(){
-            alert('Contact IT');
-          }
-  });
+    });
+  }
 }
 
 function insert_timecard_detail2(){
